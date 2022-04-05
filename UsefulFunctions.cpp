@@ -172,3 +172,38 @@ void dblBuffer(HWND hWnd, HDC hdc, LPRECT rcClientRect, Image *image) {
     DeleteObject( bmp ); // delete bitmap since it is no longer required
     DeleteDC( memDC );
 }
+Image readPPM(const char *filename)
+{
+    std::ifstream ifs;
+    ifs.open(filename, std::ios::binary);
+    // need to spec. binary mode for Windows users
+    Image src;
+    try {
+        if (ifs.fail()) {
+            throw("Can't open input file");
+        }
+        std::string header;
+        int w, h, b;
+        ifs >> header;
+        if (strcmp(header.c_str(), "P6") != 0) throw("Can't read input file");
+        ifs >> w >> h >> b;
+        src.w = w;
+        src.h = h;
+        src.pixels = new Image::Rgb[w * h]; // this is throw an exception if bad_alloc
+        ifs.ignore(256, '\n'); // skip empty lines in necessary until we get to the binary data
+        unsigned char pix[3]; // read each pixel one by one and convert bytes to floats
+        for (int i = 0; i < w * h; ++i) {
+            ifs.read(reinterpret_cast<char *>(pix), 3);
+            src.pixels[i].r = pix[0] / 255.f;
+            src.pixels[i].g = pix[1] / 255.f;
+            src.pixels[i].b = pix[2] / 255.f;
+        }
+        ifs.close();
+    }
+    catch (const char *err) {
+        fprintf(stderr, "%s\n", err);
+        ifs.close();
+    }
+
+    return src;
+}
