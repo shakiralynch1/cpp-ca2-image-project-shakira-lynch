@@ -13,7 +13,7 @@ HINSTANCE hInst;
 // Forward declarations of functions included in this code module:
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-
+//chn
 
 int createWindow(HINSTANCE &hInstance, int &nCmdShow, HMENU &hMenubar) {
     WNDCLASSEX wcex;
