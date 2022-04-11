@@ -98,8 +98,9 @@ void processMenu(HWND hWnd, WPARAM wParam)
         }
         case IDM_EDIT_Greyscale:
             image->load(current_file);
+            image->greyScale();
             image->greyScale(); //comment
-             break;
+            break;
         case IDM_EDIT_FlipHorizontal:
             //image.load(current_file);
             image->flipHorizontal();
