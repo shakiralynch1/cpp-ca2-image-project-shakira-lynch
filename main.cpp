@@ -21,6 +21,8 @@ using namespace std;
 #define IDM_EDIT_AD2 12
 #define IDM_EDIT_AD3 13
 #define IDM_FILE_LOAD_RAW 14
+#define IDM_EDIT_ADV 15
+#define IDM_EDIT_G 16
 string current_file;
 string fileType;
 // The main window class name.
@@ -52,8 +54,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     AppendMenuW(Alter, MF_SEPARATOR, 0, NULL);
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_AD1, L"&Additional Function 1"); // Copy this line to add
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_AD2, L"&Additional Function 2"); // Copy this line to add
-    AppendMenuW(Alter, MF_STRING, IDM_EDIT_AD3, L"&Additional Function 3"); // Copy this line to add
-     // Copy this line to add
+    AppendMenuW(Alter, MF_STRING, IDM_EDIT_AD3, L"&Additional Function 3");
+    AppendMenuW(Alter, MF_SEPARATOR, 0, NULL);// Copy this line to add
+    AppendMenuW(Alter, MF_STRING, IDM_EDIT_AD3, L"&Gamma");
+    AppendMenuW(Alter, MF_STRING, IDM_EDIT_ADV, L"&Advanced Features");
+    // Copy this line to add
 
 
 
@@ -98,7 +103,6 @@ void processMenu(HWND hWnd, WPARAM wParam)
         }
         case IDM_EDIT_Greyscale:
             image->load(current_file);
-            image->greyScale();
             image->greyScale(); //comment
             break;
         case IDM_EDIT_FlipHorizontal:
@@ -121,7 +125,6 @@ void processMenu(HWND hWnd, WPARAM wParam)
             image->filterBlue();
             break;
         case IDM_EDIT_AD1:
-
             image->AdditionalFunction1();
             break;
         case IDM_EDIT_AD2:
@@ -131,6 +134,12 @@ void processMenu(HWND hWnd, WPARAM wParam)
         case IDM_EDIT_AD3:
 
             image->AdditionalFunction3();
+            break;
+        case IDM_EDIT_G:
+            image->Gamma();
+            break;
+        case IDM_EDIT_ADV:
+            image->AdvancedFeature();
             break;
         case IDM_EDIT_Reset:
             if(fileType=="ppm")
